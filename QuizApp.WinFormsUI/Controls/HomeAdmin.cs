@@ -7,10 +7,10 @@ public partial class HomeAdmin : UserControl
 {
     private User _user;
 
-    public HomeAdmin(User user)
+    public HomeAdmin()
     {
-        _user = user;
+        //_user = user;
         InitializeComponent();
-        lblWelcome.Text = string.Format(Resources.welcome_user, _user.Username);
+        //lblWelcome.Text = string.Format(Resources.welcome_user, _user.Username);
     }
 }

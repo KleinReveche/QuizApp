@@ -47,6 +47,10 @@ namespace QuizApp.WinFormsUI.Forms
             panelRight = new Panel();
             panelLeft = new Panel();
             lblSetup = new Label();
+            boxFirstName = new ReaLTaiizor.Controls.HopeTextBox();
+            lblFirstName = new Label();
+            boxLastName = new ReaLTaiizor.Controls.HopeTextBox();
+            lblLastName = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelRight.SuspendLayout();
             panelLeft.SuspendLayout();
@@ -61,7 +65,7 @@ namespace QuizApp.WinFormsUI.Forms
             boxEmail.Font = new Font("Segoe UI", 12F);
             boxEmail.ForeColor = Color.FromArgb(255, 249, 249);
             boxEmail.Hint = "";
-            boxEmail.Location = new Point(30, 403);
+            boxEmail.Location = new Point(39, 482);
             boxEmail.MaxLength = 32767;
             boxEmail.Multiline = false;
             boxEmail.Name = "boxEmail";
@@ -84,7 +88,7 @@ namespace QuizApp.WinFormsUI.Forms
             boxRepeatPassword.Font = new Font("Segoe UI", 12F);
             boxRepeatPassword.ForeColor = Color.FromArgb(255, 249, 249);
             boxRepeatPassword.Hint = "";
-            boxRepeatPassword.Location = new Point(30, 321);
+            boxRepeatPassword.Location = new Point(39, 400);
             boxRepeatPassword.MaxLength = 32767;
             boxRepeatPassword.Multiline = false;
             boxRepeatPassword.Name = "boxRepeatPassword";
@@ -107,7 +111,7 @@ namespace QuizApp.WinFormsUI.Forms
             boxPassword.Font = new Font("Segoe UI", 12F);
             boxPassword.ForeColor = Color.FromArgb(255, 249, 249);
             boxPassword.Hint = "";
-            boxPassword.Location = new Point(30, 248);
+            boxPassword.Location = new Point(39, 327);
             boxPassword.MaxLength = 32767;
             boxPassword.Multiline = false;
             boxPassword.Name = "boxPassword";
@@ -130,7 +134,7 @@ namespace QuizApp.WinFormsUI.Forms
             boxUsername.Font = new Font("Segoe UI", 12F);
             boxUsername.ForeColor = Color.FromArgb(255, 249, 249);
             boxUsername.Hint = "";
-            boxUsername.Location = new Point(30, 167);
+            boxUsername.Location = new Point(39, 246);
             boxUsername.MaxLength = 32767;
             boxUsername.Multiline = false;
             boxUsername.Name = "boxUsername";
@@ -149,7 +153,7 @@ namespace QuizApp.WinFormsUI.Forms
             btnAction.BackColor = Color.Transparent;
             btnAction.BaseColor = Color.FromArgb(229, 196, 146);
             btnAction.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAction.Location = new Point(88, 462);
+            btnAction.Location = new Point(97, 541);
             btnAction.Name = "btnAction";
             btnAction.Rounded = true;
             btnAction.Size = new Size(247, 52);
@@ -171,7 +175,7 @@ namespace QuizApp.WinFormsUI.Forms
             lblEmail.AutoSize = true;
             lblEmail.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblEmail.ForeColor = Color.FromArgb(255, 249, 249);
-            lblEmail.Location = new Point(27, 379);
+            lblEmail.Location = new Point(36, 458);
             lblEmail.Margin = new Padding(4, 0, 4, 0);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(103, 21);
@@ -183,7 +187,7 @@ namespace QuizApp.WinFormsUI.Forms
             lblRepeatPassword.AutoSize = true;
             lblRepeatPassword.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblRepeatPassword.ForeColor = Color.FromArgb(255, 249, 249);
-            lblRepeatPassword.Location = new Point(28, 297);
+            lblRepeatPassword.Location = new Point(37, 376);
             lblRepeatPassword.Margin = new Padding(4, 0, 4, 0);
             lblRepeatPassword.Name = "lblRepeatPassword";
             lblRepeatPassword.Size = new Size(149, 21);
@@ -195,7 +199,7 @@ namespace QuizApp.WinFormsUI.Forms
             lblPassword.AutoSize = true;
             lblPassword.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblPassword.ForeColor = Color.FromArgb(255, 249, 249);
-            lblPassword.Location = new Point(26, 223);
+            lblPassword.Location = new Point(35, 302);
             lblPassword.Margin = new Padding(4, 0, 4, 0);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(86, 21);
@@ -207,7 +211,7 @@ namespace QuizApp.WinFormsUI.Forms
             lblUsername.AutoSize = true;
             lblUsername.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblUsername.ForeColor = Color.FromArgb(255, 249, 249);
-            lblUsername.Location = new Point(24, 140);
+            lblUsername.Location = new Point(33, 219);
             lblUsername.Margin = new Padding(4, 0, 4, 0);
             lblUsername.Name = "lblUsername";
             lblUsername.Size = new Size(92, 21);
@@ -264,6 +268,10 @@ namespace QuizApp.WinFormsUI.Forms
             // 
             panelRight.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelRight.BackColor = Color.FromArgb(26, 17, 17);
+            panelRight.Controls.Add(boxLastName);
+            panelRight.Controls.Add(lblLastName);
+            panelRight.Controls.Add(boxFirstName);
+            panelRight.Controls.Add(lblFirstName);
             panelRight.Controls.Add(boxEmail);
             panelRight.Controls.Add(boxRepeatPassword);
             panelRight.Controls.Add(boxPassword);
@@ -307,6 +315,78 @@ namespace QuizApp.WinFormsUI.Forms
             lblSetup.TabIndex = 8;
             lblSetup.Text = "Initial Setup";
             // 
+            // boxFirstName
+            // 
+            boxFirstName.BackColor = Color.FromArgb(29, 16, 15);
+            boxFirstName.BaseColor = Color.FromArgb(29, 16, 15);
+            boxFirstName.BorderColorA = Color.FromArgb(64, 158, 255);
+            boxFirstName.BorderColorB = Color.FromArgb(246, 221, 218);
+            boxFirstName.Font = new Font("Segoe UI", 12F);
+            boxFirstName.ForeColor = Color.FromArgb(255, 249, 249);
+            boxFirstName.Hint = "";
+            boxFirstName.Location = new Point(37, 166);
+            boxFirstName.MaxLength = 32767;
+            boxFirstName.Multiline = false;
+            boxFirstName.Name = "boxFirstName";
+            boxFirstName.PasswordChar = '\0';
+            boxFirstName.ScrollBars = ScrollBars.None;
+            boxFirstName.SelectedText = "";
+            boxFirstName.SelectionLength = 0;
+            boxFirstName.SelectionStart = 0;
+            boxFirstName.Size = new Size(183, 38);
+            boxFirstName.TabIndex = 8;
+            boxFirstName.TabStop = false;
+            boxFirstName.UseSystemPasswordChar = false;
+            // 
+            // lblFirstName
+            // 
+            lblFirstName.AutoSize = true;
+            lblFirstName.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblFirstName.ForeColor = Color.FromArgb(255, 249, 249);
+            lblFirstName.Location = new Point(30, 142);
+            lblFirstName.Margin = new Padding(4, 0, 4, 0);
+            lblFirstName.Name = "lblFirstName";
+            lblFirstName.Size = new Size(95, 21);
+            lblFirstName.TabIndex = 7;
+            lblFirstName.Text = "First Name:";
+            lblFirstName.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // boxLastName
+            // 
+            boxLastName.BackColor = Color.FromArgb(29, 16, 15);
+            boxLastName.BaseColor = Color.FromArgb(29, 16, 15);
+            boxLastName.BorderColorA = Color.FromArgb(64, 158, 255);
+            boxLastName.BorderColorB = Color.FromArgb(246, 221, 218);
+            boxLastName.Font = new Font("Segoe UI", 12F);
+            boxLastName.ForeColor = Color.FromArgb(255, 249, 249);
+            boxLastName.Hint = "";
+            boxLastName.Location = new Point(226, 166);
+            boxLastName.MaxLength = 32767;
+            boxLastName.Multiline = false;
+            boxLastName.Name = "boxLastName";
+            boxLastName.PasswordChar = '\0';
+            boxLastName.ScrollBars = ScrollBars.None;
+            boxLastName.SelectedText = "";
+            boxLastName.SelectionLength = 0;
+            boxLastName.SelectionStart = 0;
+            boxLastName.Size = new Size(184, 38);
+            boxLastName.TabIndex = 10;
+            boxLastName.TabStop = false;
+            boxLastName.UseSystemPasswordChar = false;
+            // 
+            // lblLastName
+            // 
+            lblLastName.AutoSize = true;
+            lblLastName.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblLastName.ForeColor = Color.FromArgb(255, 249, 249);
+            lblLastName.Location = new Point(219, 142);
+            lblLastName.Margin = new Padding(4, 0, 4, 0);
+            lblLastName.Name = "lblLastName";
+            lblLastName.Size = new Size(97, 21);
+            lblLastName.TabIndex = 9;
+            lblLastName.Text = "Last Name:";
+            lblLastName.TextAlign = ContentAlignment.TopCenter;
+            // 
             // InitialSetupForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -345,5 +425,9 @@ namespace QuizApp.WinFormsUI.Forms
         private Panel panelRight;
         private Panel panelLeft;
         private Label lblSetup;
+        private ReaLTaiizor.Controls.HopeTextBox boxLastName;
+        private Label lblLastName;
+        private ReaLTaiizor.Controls.HopeTextBox boxFirstName;
+        private Label lblFirstName;
     }
 }

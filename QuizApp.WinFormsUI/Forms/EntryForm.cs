@@ -62,8 +62,10 @@ public partial class EntryForm : Form
         var credentials = new Credentials();
         var newUser = new User
         {
-            Username = boxUsername.Text,
-            PasswordHash = credentials.HashPassword(boxPassword.Text, out var salt),
+            FirstName = boxRegisterFirstName.Text,
+            LastName = boxRegisterLastName.Text,
+            Username = boxRegisterUsername.Text,
+            PasswordHash = credentials.HashPassword(boxRegisterPassword.Text, out var salt),
             Salt = salt,
             Email = boxEmail.Text
         };
@@ -77,8 +79,8 @@ public partial class EntryForm : Form
         var errorMsg = new StringBuilder();
         var validation = new RegisterValidation(QuizApp.Repo);
 
-        errorMsg.Append(validation.ValidateUsername(boxUsername.Text));
-        errorMsg.Append(validation.ValidatePassword(boxPassword.Text, boxRepeatPassword.Text));
+        errorMsg.Append(validation.ValidateUsername(boxRegisterUsername.Text));
+        errorMsg.Append(validation.ValidatePassword(boxRegisterPassword.Text, boxRepeatPassword.Text));
         errorMsg.Append(validation.ValidateEmail(boxEmail.Text));
 
         return errorMsg.ToString();
@@ -94,11 +96,11 @@ public partial class EntryForm : Form
             return;
         }
 
-        var user = QuizApp.Repo.GetUser(boxUsername.Text);
+        var user = QuizApp.Repo.GetUser(boxLoginUsername.Text);
         ShowDashboard(user!);
     }
 
-    private string ValidateLogin() => new LoginValidation(QuizApp.Repo).ValidateLogin(boxUsername.Text, boxPassword.Text);
+    private string ValidateLogin() => new LoginValidation(QuizApp.Repo).ValidateLogin(boxLoginUsername.Text, boxLoginPassword.Text);
 
     private void ShowDashboard(User user)
     {
@@ -116,37 +118,23 @@ public partial class EntryForm : Form
         }
     }
 
-    private void LblSwitchEntryFormClick(object sender, EventArgs e)
+    private void lblSwitchEntryForm_Click(object sender, EventArgs e)
     {
         if (_isRegisterForm)
         {
-            lblSwitchEntryForm.Text = Resources.switch_entry_form_register;
-            btnAction.Hide();
-            btnAction.Text = Resources.login;
-            btnAction.Show();
-            lblFormName.Text = Resources.login;
-            boxRepeatPassword.Visible = false;
-            lblRepeatPassword.Visible = false;
-            boxEmail.Visible = false;
-            lblEmail.Visible = false;
+            panelLogin.Visible = true;
+            panelRegister.Visible = false;
             _isRegisterForm = false;
         }
         else
         {
-            lblSwitchEntryForm.Text = Resources.switch_entry_form_login;
-            btnAction.Hide();
-            btnAction.Text = Resources.register;
-            btnAction.Show();
-            lblFormName.Text = Resources.register;
-            boxRepeatPassword.Visible = true;
-            lblRepeatPassword.Visible = true;
-            boxEmail.Visible = true;
-            lblEmail.Visible = true;
+            panelLogin.Visible = false;
+            panelRegister.Visible = true;
             _isRegisterForm = true;
         }
     }
 
-    private void boxPassword_KeyPress(object sender, KeyPressEventArgs e)
+    private void box_KeyPress(object sender, KeyPressEventArgs e)
     {
         if (e.KeyChar != (char)Keys.Return) return;
 

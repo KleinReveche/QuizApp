@@ -72,9 +72,9 @@ public partial class AdminDashboardForm : Form
                 _currentPageControl.Visible = true;
                 break;
             case "btnUsers":
-                //if (_currentPageControl == users) return;
+                if (_currentPageControl == users) return;
                 HideCurrentPage(button);
-                //_currentPageControl = users;
+                _currentPageControl = users;
                 _currentPageControl.Visible = true;
                 break;
             case "btnSettings":

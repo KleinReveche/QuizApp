@@ -28,4 +28,4 @@ public class TakerScore
 
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(Quiz))]
-internal partial class QuizJsonContext : JsonSerializerContext;
+public partial class QuizJsonContext : JsonSerializerContext;

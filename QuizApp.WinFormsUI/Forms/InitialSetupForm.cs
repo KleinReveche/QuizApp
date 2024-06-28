@@ -45,6 +45,8 @@ public partial class InitialSetupForm : Form
         var errorMsg = new StringBuilder();
         var validation = new RegisterValidation(QuizApp.Repo);
 
+        errorMsg.Append(validation.ValidateName(boxFirstName.Text));
+        errorMsg.Append(validation.ValidateName(boxLastName.Text));
         errorMsg.Append(validation.ValidateUsername(boxUsername.Text));
         errorMsg.Append(validation.ValidatePassword(boxPassword.Text, boxRepeatPassword.Text));
         errorMsg.Append(validation.ValidateEmail(boxEmail.Text));
@@ -58,6 +60,8 @@ public partial class InitialSetupForm : Form
         var credentials = new Credentials();
         var newUser = new User
         {
+            FirstName = boxFirstName.Text,
+            LastName = boxLastName.Text,
             Username = boxUsername.Text,
             PasswordHash = credentials.HashPassword(boxPassword.Text, out var salt),
             Salt = salt,

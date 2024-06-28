@@ -41,7 +41,7 @@ namespace QuizApp.WinFormsUI.Forms
             btnHome = new Button();
             btnQuizzes = new Button();
             home = new HomeStudent();
-            settings = new Settings(_user);
+            settings = new Settings();
             quizzes = new QuizzesStudent();
             SidePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();

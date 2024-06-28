@@ -5882,7 +5882,7 @@
     <value>Don't have an account yet? Register here</value>
   </data>
     <data name="switch_entry_form_login" xml:space="preserve">
-    <value>     Already Registered? Login here</value>
+    <value>Already Registered? Login here</value>
   </data>
     <data name="register" xml:space="preserve">
     <value>Register</value>

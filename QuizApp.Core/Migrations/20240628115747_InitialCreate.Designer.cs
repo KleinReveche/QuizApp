@@ -11,7 +11,7 @@ using QuizApp.Core.Data;
 namespace QuizApp.Core.Migrations
 {
     [DbContext(typeof(SqliteDbContext))]
-    [Migration("20240627033446_InitialCreate")]
+    [Migration("20240628115747_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -93,6 +93,16 @@ namespace QuizApp.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");

@@ -253,10 +253,11 @@
             Controls.Add(BtnImport);
             Controls.Add(BtnCreateQuiz);
             Controls.Add(lblWelcome);
-            Controls.Add(listQuizzes);
             Controls.Add(LblNoQuizAvailable);
+            Controls.Add(listQuizzes);
             Name = "QuizzesAdmin";
             Size = new Size(1337, 787);
+            Load += QuizzesAdmin_Load;
             Layout += QuizzesAdmin_Layout;
             quizzesTabPage.ResumeLayout(false);
             EditQuiz.ResumeLayout(false);

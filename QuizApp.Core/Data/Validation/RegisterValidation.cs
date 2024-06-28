@@ -55,4 +55,14 @@ public class RegisterValidation(IRepo repo)
 
         return errorMsg.ToString();
     }
+
+    public string ValidateName(string name) {
+
+        var errorMsg = new StringBuilder();
+
+        if (name.Length < 2)
+            errorMsg.Append("\u2717 Name must be at least 2 characters long.\n");
+
+        return errorMsg.ToString();
+    }
 }

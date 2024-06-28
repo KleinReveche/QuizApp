@@ -15,60 +15,19 @@ public static class QuizFilesManager
 
     private static readonly QuizJsonContext Context = new(SourceGenOptions);
 
-    public static Quiz? LoadQuizJson(Stream stream, IRepo repo)
-    {
-        var json = new StreamReader(stream).ReadToEnd();
-        try
-        {
-            var oldQuiz = JsonSerializer.Deserialize(json, Context.Quiz);
-            if (oldQuiz == null) return null;
-            
-            return new Quiz
-            {
-                Id = repo.GetNewQuizId(),
-                Title = oldQuiz.Title,
-                Questions = oldQuiz.Questions,
-                TakerScores = []
-            };
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
-    public static Quiz? LoadQuizQuiz(Stream stream, IRepo repo)
-    {
-        var json = new StreamReader(stream).ReadToEnd();
-        try
-        {
-            var oldQuiz = JsonSerializer.Deserialize(JsonScrambler.Decode(json), Context.Quiz);
-            if (oldQuiz == null) return null;
-            
-            return new Quiz
-            {
-                Id = repo.GetNewQuizId(),
-                Title = oldQuiz.Title,
-                Questions = oldQuiz.Questions,
-                TakerScores = []
-            };
-        }
-        catch
-        {
-            return null;
-        }
-    }
+    public static Quiz? LoadQuizJson(Stream stream, IRepo repo) => QuizHandlers.JsonToQuiz(repo, new StreamReader(stream).ReadToEnd(), Context);
+    public static Quiz? LoadQuizQuiz(Stream stream, IRepo repo) => QuizHandlers.JsonToQuiz(repo, new StreamReader(stream).ReadToEnd(), Context, true);
 
     /**
      * Loads quiz from a formatted text file.
-     *
+     * 
      * Formatting:
-     *
+     * 
      * Use '*' to indicate correct answer.
      * 
      * Quiz Title
      * --
-     * Question 1 
+     * Question 1
      * > Answer 1
      * >* Answer 2
      * > Answer 3
@@ -97,14 +56,14 @@ public static class QuizFilesManager
         var json = JsonSerializer.Serialize(quiz, Context.Quiz);
         File.WriteAllText(location, JsonScrambler.Encode(json));
     }
-    
+
     public static void SaveQuizJson(Quiz quiz, string location, bool clean)
     {
         if (clean) quiz.TakerScores.Clear();
         var json = JsonSerializer.Serialize(quiz, Context.Quiz);
         File.WriteAllText(location, json);
     }
-    
+
     public static void SaveQuizTxt(Quiz quiz, string location)
     {
         quiz.TakerScores.Clear();

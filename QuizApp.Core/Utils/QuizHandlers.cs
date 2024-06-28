@@ -1,4 +1,6 @@
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using QuizApp.Core.Data.Models;
 using QuizApp.Core.Data.Repo;
 
@@ -92,6 +94,7 @@ public static class QuizHandlers
         var text = quizText.Trim().Split("--", StringSplitOptions.TrimEntries);
         var quizTitle = text[0].Trim();
         var questions = new List<Question>();
+        var initialQuestionId = repo.GetNewQuestionId();
         
         foreach (var question in text.Skip(1))
         {
@@ -113,12 +116,13 @@ public static class QuizHandlers
             
             var q = new Question
             {
-                Id = repo.GetNewQuestionId(),
+                Id = initialQuestionId,
                 QuestionText = questionText,
                 Answers = answers,
                 CorrectAnswerIndex = correctAnswerIndex
             };
             questions.Add(q);
+            initialQuestionId++;
         }
 
         return new Quiz
@@ -127,5 +131,40 @@ public static class QuizHandlers
             Title = quizTitle,
             Questions = questions
         };
+    }
+
+    public static Quiz? JsonToQuiz(IRepo repo, string json, QuizJsonContext context, bool scrambled = false)
+    {
+        try
+        {
+            var oldQuiz = JsonSerializer.Deserialize(scrambled ? JsonScrambler.Decode(json) : json, context.Quiz);
+            if (oldQuiz == null) return null;
+
+            var questions = new List<Question>();
+            var initialQuestionId = repo.GetNewQuestionId();
+            foreach (var oldQuestion in oldQuiz.Questions)
+            {
+                questions.Add(new Question
+                {
+                    Id = initialQuestionId,
+                    QuestionText = oldQuestion.QuestionText,
+                    Answers = oldQuestion.Answers,
+                    CorrectAnswerIndex = oldQuestion.CorrectAnswerIndex
+                });
+                initialQuestionId++;
+            }
+
+            return new Quiz
+            {
+                Id = repo.GetNewQuizId(),
+                Title = oldQuiz.Title,
+                Questions = questions,
+                TakerScores = oldQuiz.TakerScores
+            };
+        }
+        catch
+        {
+            return null;
+        }
     }
 }

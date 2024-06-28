@@ -24,7 +24,7 @@ public partial class QuizzesAdmin : UserControl
 
     private void BtnCreateQuiz_Click(object sender, EventArgs e)
     {
-        if (!GetConfirmation()) return;
+        if (InQuizCreation()) return;
 
         var newQuiz = new Quiz
         {
@@ -63,22 +63,32 @@ public partial class QuizzesAdmin : UserControl
         _isCreatingQuiz = true;
     }
 
-    private bool GetConfirmation()
+    private bool InQuizCreation()
     {
-        if (!_isCreatingQuiz) return true;
+        if (!_isCreatingQuiz) return false;
 
         var result = MessageBox.Show(Resources.disregardQuiz, Resources.warning, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-        if (result == DialogResult.No) return false;
+        if (result == DialogResult.No) return true;
         _isCreatingQuiz = false;
         listQuizzes.Items.RemoveAt(listQuizzes.Items.Count - 1);
         _quizzes.RemoveAt(_quizzes.Count - 1);
         EditBox.Text = "";
-        return true;
+
+        if (_quizzes.Count != 0) return false;
+
+        LblNoQuizAvailable.Visible = true;
+        listQuizzes.Visible = false;
+        quizzesTabPage.Visible = false;
+        btnDelete.Visible = false;
+        btnSave.Visible = false;
+        btnValidate.Visible = false;
+        btnExport.Visible = false;
+        return false;
     }
 
     private void BtnImport_Click(object sender, EventArgs e)
     {
-        if (!GetConfirmation()) return;
+        if (InQuizCreation()) return;
         using var openFileDialog = new OpenFileDialog();
         openFileDialog.Filter = Resources.files_supported;
         openFileDialog.RestoreDirectory = true;
@@ -97,6 +107,7 @@ public partial class QuizzesAdmin : UserControl
                     return;
                 }
                 listQuizzes.Items.Add(newQuizJson.Title);
+                _quizzes.Add(newQuizJson);
                 QuizApp.Repo.AddQuiz(newQuizJson);
                 break;
             case ".txt":
@@ -107,13 +118,10 @@ public partial class QuizzesAdmin : UserControl
                     return;
                 }
                 listQuizzes.Items.Add(newQuizTxt.Title);
-
-                //TODO: REMOVE THIS:
                 _quizzes.Add(newQuizTxt);
                 QuizApp.Repo.AddQuiz(newQuizTxt);
                 break;
             case ".quiz":
-                // TODO: CHANGE
                 var newQuizQuiz = QuizFilesManager.LoadQuizQuiz(file, QuizApp.Repo);
                 if (newQuizQuiz == null)
                 {
@@ -121,6 +129,7 @@ public partial class QuizzesAdmin : UserControl
                     return;
                 }
                 listQuizzes.Items.Add(newQuizQuiz.Title);
+                _quizzes.Add(newQuizQuiz);
                 QuizApp.Repo.AddQuiz(newQuizQuiz);
                 break;
             default:
@@ -152,6 +161,12 @@ public partial class QuizzesAdmin : UserControl
     private void BtnDelete_Click(object sender, EventArgs e)
     {
         if (listQuizzes.SelectedIndex < 0) return;
+        if (_isCreatingQuiz)
+        {
+            InQuizCreation();
+            return;
+        }
+        
         var result = MessageBox.Show(Resources.delete_quiz, Resources.warning, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
         if (result == DialogResult.No) return;
         var lastHotLightedIndex = listQuizzes.SelectedIndex;
@@ -206,8 +221,12 @@ public partial class QuizzesAdmin : UserControl
             MessageBox.Show(Resources.failed_save, Resources.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
         }
-
-        QuizApp.Repo.AddQuiz(quiz);
+        
+        if (_isCreatingQuiz)
+            listQuizzes.Items.Add(quiz.Title);
+        else
+            QuizApp.Repo.UpdateQuiz(_quizzes[listQuizzes.SelectedIndex], quiz);
+        
         _quizzes[listQuizzes.SelectedIndex] = quiz;
         listQuizzes.Items[listQuizzes.SelectedIndex] = quiz.Title;
         EditBox.Text = QuizHandlers.QuizToString(quiz);
@@ -258,16 +277,16 @@ public partial class QuizzesAdmin : UserControl
         {
             if (!SaveQuiz()) return;
         }
-        
+
         if (listQuizzes.SelectedIndex < 0) return;
         var quiz = _quizzes[listQuizzes.SelectedIndex];
-        
+
         using var saveFileDialog = new CommonSaveFileDialog();
         saveFileDialog.Filters.Add(new CommonFileDialogFilter("Quiz files", "*.quiz"));
         saveFileDialog.Filters.Add(new CommonFileDialogFilter("JSON files", "*.json"));
-        saveFileDialog.Filters.Add(new CommonFileDialogFilter("Text files", "*.txt"));        
+        saveFileDialog.Filters.Add(new CommonFileDialogFilter("Text files", "*.txt"));
         saveFileDialog.DefaultFileName = quiz.Title;
-        
+
         var checkbox = new CommonFileDialogCheckBox("Remove user scores", true);
         saveFileDialog.Controls.Add(checkbox);
 
@@ -290,5 +309,10 @@ public partial class QuizzesAdmin : UserControl
             default:
                 throw new NotSupportedException();
         }
+    }
+
+    private void QuizzesAdmin_Load(object sender, EventArgs e)
+    {
+        _quizzes = QuizApp.Repo.GetQuizzes();
     }
 }

@@ -9,9 +9,9 @@ public partial class Settings : UserControl
 {
     private readonly User _user;
 
-    public Settings(User user)
+    public Settings()
     {
-        _user = user;
+        //_user = user;
         InitializeComponent();
     }
 
@@ -35,6 +35,8 @@ public partial class Settings : UserControl
 
         var updatedUser = new User
         {
+            FirstName = _user.FirstName,
+            LastName = _user.LastName,
             Username = _user.Username,
             Email = _user.Email,
             UserType = _user.UserType,

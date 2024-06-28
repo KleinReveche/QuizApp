@@ -29,6 +29,8 @@ namespace QuizApp.Core.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    FirstName = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Username = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     PasswordHash = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Salt = table.Column<byte[]>(type: "BLOB", nullable: false),

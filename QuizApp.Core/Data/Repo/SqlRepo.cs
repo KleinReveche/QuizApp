@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using QuizApp.Core.Data.Models;
 
 namespace QuizApp.Core.Data.Repo;
@@ -84,7 +85,7 @@ public class SqlRepo : IRepo
 
     public List<Quiz> GetQuizzes()
     {
-        return _db.Quizzes.ToList();
+        return _db.Quizzes.Include(q => q.Questions).ToList();
     }
 
     public int GetNewUserId()
