@@ -12,25 +12,13 @@ internal static class QuizApp
     private static void Main()
     {
         ApplicationConfiguration.Initialize();
+        //Application.Run(new AdminDashboardForm(Repo.GetUser("admin")!));
+        // Application.Run(new QuizForm(Repo.GetQuizzes()[1], Repo.GetUser(1)));
+        // return;
+
         if (File.Exists(SqliteDbContext.DbName))
             Application.Run(new EntryForm());
         else
             Application.Run(new InitialSetupForm());
-
-        //Application.Run(new StudentDashboardForm(
-        //    new StudentDashboardViewModel
-        //    {
-        //        User = new User
-        //        {
-        //            Username = "kleinreveche",
-        //            Email = "kreveche@tracecollege.edu.ph",
-        //            PasswordHash = "",
-        //            Salt = [],
-        //            UserType = UserType.User
-        //        }
-        //    }
-        //    ));
-        //Application.Run(new EntryForm());
-        //Application.Run(new AdminDashboardForm(new AdminDashboardViewModel() {User = Repo.GetUser("admin")!}));
     }
 }

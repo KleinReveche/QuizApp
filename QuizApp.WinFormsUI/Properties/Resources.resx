@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-    <!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,74 +59,86 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root"
-                xmlns="">
-        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
-        <xsd:element name="root" msdata:IsDataSet="true">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
             <xsd:complexType>
-                <xsd:choice maxOccurs="unbounded">
-                    <xsd:element name="metadata">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
-                            </xsd:sequence>
-                            <xsd:attribute name="name" use="required" type="xsd:string"/>
-                            <xsd:attribute name="type" type="xsd:string"/>
-                            <xsd:attribute name="mimetype" type="xsd:string"/>
-                            <xsd:attribute ref="xml:space"/>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="assembly">
-                        <xsd:complexType>
-                            <xsd:attribute name="alias" type="xsd:string"/>
-                            <xsd:attribute name="name" type="xsd:string"/>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="data">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
-                            </xsd:sequence>
-                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-                            <xsd:attribute ref="xml:space"/>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="resheader">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                            </xsd:sequence>
-                            <xsd:attribute name="name" type="xsd:string" use="required"/>
-                        </xsd:complexType>
-                    </xsd:element>
-                </xsd:choice>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
-        </xsd:element>
-    </xsd:schema>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>2.0</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
-            PublicKeyToken=b77a5c561934e089
-        </value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
-            PublicKeyToken=b77a5c561934e089
-        </value>
-    </resheader>
-    <assembly alias="System.Drawing"
-              name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
-    <data name="trace_logo" type="System.Drawing.Bitmap, System.Drawing"
-          mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="switch_entry_form_login" xml:space="preserve">
+    <value>Already Registered? Login here</value>
+  </data>
+  <data name="discard_user" xml:space="preserve">
+    <value>Are you sure you want to discard the current user?</value>
+  </data>
+  <data name="welcome_user" xml:space="preserve">
+    <value>Welcome {0}!</value>
+  </data>
+  <data name="no_syntax_error" xml:space="preserve">
+    <value>No syntax errors found.</value>
+  </data>
+  <data name="no_answer" xml:space="preserve">
+    <value>There must be an answer first.</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="trace_logo" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
             iVBORw0KGgoAAAANSUhEUgAACMoAAAspCAYAAADMcQM7AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
             wgAADsIBFShKgAAA/7JJREFUeF7s/Q+cblld3/kiB8u2wGotKLT4U8ABwVIppEuB0iPHQin+KJTYxwNH
             oBqkGmgL+VOIYqHp151UorF0NEOFeDlGTmInJvfkEnUmjdfcvjmOyVUnIbHH3GkdSOi0mYQwdkymndGO
@@ -5871,25 +5883,60 @@
             AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAs6+++j/LZwOI
             m+2p9gAAAABJRU5ErkJggg==
         </value>
-    </data>
-    <data name="error" xml:space="preserve">
+  </data>
+  <data name="error" xml:space="preserve">
     <value>Error</value>
   </data>
-    <data name="login" xml:space="preserve">
-    <value>Login</value>
+  <data name="files_supported" xml:space="preserve">
+    <value>Quiz, JSON, Text files (*.quiz, *.json, *.txt)|*.quiz;*.json;*.txt</value>
   </data>
-    <data name="switch_entry_form_register" xml:space="preserve">
+  <data name="test_score" xml:space="preserve">
+    <value>Test score: {0}</value>
+  </data>
+  <data name="success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="no_answer_above" xml:space="preserve">
+    <value>There must be an answer to the boxes above.</value>
+  </data>
+  <data name="switch_entry_form_register" xml:space="preserve">
     <value>Don't have an account yet? Register here</value>
   </data>
-    <data name="switch_entry_form_login" xml:space="preserve">
-    <value>Already Registered? Login here</value>
+  <data name="save_confirmation" xml:space="preserve">
+    <value>Are you sure you want to save the quiz?</value>
   </data>
-    <data name="register" xml:space="preserve">
+  <data name="files_csv" xml:space="preserve">
+    <value>CSV files (*.csv)|*.csv</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="password_updated_success" xml:space="preserve">
+    <value>Password successfully updated.</value>
+  </data>
+  <data name="register" xml:space="preserve">
     <value>Register</value>
   </data>
-    <data name="trace_logo_ico" type="System.Drawing.Icon, System.Drawing"
-          mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>
+  <data name="change_password" xml:space="preserve">
+    <value>Change your password first.</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>@tracecollege.edu.ph</value>
+  </data>
+  <data name="info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="save_user_confirmation" xml:space="preserve">
+    <value>Are you sure you want to save the user?</value>
+  </data>
+  <data name="failed_save" xml:space="preserve">
+    <value>Failed Saving the Quiz.</value>
+  </data>
+  <data name="trace_logo_ico" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
             AAABAAkAEBAAAAEAIABoBAAAlgAAABgYAAABACAAiAkAAP4EAAAgIAAAAQAgAKgQAACGDgAAMDAAAAEA
             IACoJQAALh8AAEBAAAABACAAKEIAANZEAABISAAAAQAgAIhUAAD+hgAAYGAAAAEAIAColAAAhtsAAICA
             AAABACAAKAgBAC5wAQAAAAAAAQAgAKaXAABWeAIAKAAAABAAAAAgAAAAAQAgAAAAAAAABAAAww4AAMMO
@@ -9236,47 +9283,38 @@
             ZrMZRDRRrVb71q9fj9TU1KsAzACCsbGx51599VXMmzcv6Pf7x4ErD3+k4EK0DzlhT/N4APkAZmJQXbch
             9HkagOcA3AJwDkAvwEXvHxW4X/khJ9KdZysHw2XDo0mIcwvAo8H/AFdyM4kiSgWGAAAAAElFTkSuQmCC
         </value>
-    </data>
-    <data name="files_supported" xml:space="preserve">
-        <value>Quiz, JSON, Text files (*.quiz, *.json, *.txt)|*.quiz;*.json;*.txt</value>
-    </data>
-    <data name="load_failed_quiz" xml:space="preserve">
-        <value>Failed to load quiz from file.</value>
-    </data>
-    <data name="delete_quiz" xml:space="preserve">
-        <value>Are you sure you want to delete this quiz?</value>
-    </data>
-    <data name="warning" xml:space="preserve">
-        <value>Warning</value>
-    </data>
-    <data name="success" xml:space="preserve">
-        <value>Success</value>
-    </data>
-    <data name="no_syntax_error" xml:space="preserve">
-        <value>No syntax errors found.</value>
-    </data>
-    <data name="save_confirmation" xml:space="preserve">
-        <value>Are you sure you want to save the quiz?</value>
-    </data>
-    <data name="save_success" xml:space="preserve">
-        <value>Quiz saved successfully.</value>
-    </data>
-    <data name="disregardQuiz" xml:space="preserve">
-        <value>Are you sure you want to disregard the current quiz?</value>
-    </data>
-    <data name="welcome_user" xml:space="preserve">
-        <value>Welcome {0}!</value>
-    </data>
-    <data name="password_updated_success" xml:space="preserve">
-        <value>Password successfully updated.</value>
-    </data>
-    <data name="info" xml:space="preserve">
-        <value>Info</value>
-    </data>
-    <data name="failed_save" xml:space="preserve">
-        <value>Failed Saving the Quiz.</value>
-    </data>
-    <data name="files_supported_separate" xml:space="preserve">
-        <value>Quiz files (*.quiz)|*.quiz|JSON files (*.json)|*.json|Text files (*.txt)|*.txt</value>
-    </data>
+  </data>
+  <data name="delete_user" xml:space="preserve">
+    <value>Are you sure you want to delete this user?</value>
+  </data>
+  <data name="load_failed_quiz" xml:space="preserve">
+    <value>Failed to load quiz from file.</value>
+  </data>
+  <data name="select_answer" xml:space="preserve">
+    <value>Please select an answer.</value>
+  </data>
+  <data name="save_success" xml:space="preserve">
+    <value>Quiz saved successfully.</value>
+  </data>
+  <data name="test_quiz" xml:space="preserve">
+    <value>Test Quiz</value>
+  </data>
+  <data name="discard_quiz" xml:space="preserve">
+    <value>Are you sure you want to discard the current quiz?</value>
+  </data>
+  <data name="delete_quiz" xml:space="preserve">
+    <value>Are you sure you want to delete this quiz?</value>
+  </data>
+  <data name="files_supported_separate" xml:space="preserve">
+    <value>Quiz files (*.quiz)|*.quiz|JSON files (*.json)|*.json|Text files (*.txt)|*.txt</value>
+  </data>
+  <data name="save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="save_question_success" xml:space="preserve">
+    <value>Question saved successfully.</value>
+  </data>
+  <data name="discard_question" xml:space="preserve">
+    <value>Are you sure you want to discard this question?</value>
+  </data>
 </root>

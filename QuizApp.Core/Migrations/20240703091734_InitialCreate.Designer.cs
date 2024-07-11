@@ -11,7 +11,7 @@ using QuizApp.Core.Data;
 namespace QuizApp.Core.Migrations
 {
     [DbContext(typeof(SqliteDbContext))]
-    [Migration("20240628115747_InitialCreate")]
+    [Migration("20240703091734_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -54,6 +54,12 @@ namespace QuizApp.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("QuizDone")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TimerInSeconds")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(1024)
@@ -70,20 +76,25 @@ namespace QuizApp.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("QuizId")
+                    b.Property<string>("Answers")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DateTaken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("QuizId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Score")
+                    b.Property<int?>("Score")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("TakerId")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuizId");
-
-                    b.ToTable("TakerScore");
+                    b.ToTable("TakerScores");
                 });
 
             modelBuilder.Entity("QuizApp.Core.Data.Models.User", b =>
@@ -136,18 +147,9 @@ namespace QuizApp.Core.Migrations
                         .HasForeignKey("QuizId");
                 });
 
-            modelBuilder.Entity("QuizApp.Core.Data.Models.TakerScore", b =>
-                {
-                    b.HasOne("QuizApp.Core.Data.Models.Quiz", null)
-                        .WithMany("TakerScores")
-                        .HasForeignKey("QuizId");
-                });
-
             modelBuilder.Entity("QuizApp.Core.Data.Models.Quiz", b =>
                 {
                     b.Navigation("Questions");
-
-                    b.Navigation("TakerScores");
                 });
 #pragma warning restore 612, 618
         }

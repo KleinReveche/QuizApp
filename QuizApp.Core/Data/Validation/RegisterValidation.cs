@@ -6,20 +6,27 @@ namespace QuizApp.Core.Data.Validation;
 
 public class RegisterValidation(IRepo repo)
 {
-    public string ValidateUsername(string username)
+    public string ValidateUsername(string username, bool existingUser = false)
     {
         var errorMsg = new StringBuilder();
         if (username.Length < 5)
             errorMsg.Append("\u2717 Username must be at least 5 characters long.\n");
 
-        if (repo.GetUser(username.ToLower(CultureInfo.InvariantCulture)) is not null)
+        if (repo.GetUser(username.ToLower(CultureInfo.InvariantCulture)) is not null && !existingUser)
             errorMsg.Append("\u2717 Username already exists.\n");
 
         return errorMsg.ToString();
     }
 
-    public string ValidatePassword(string password, string repeatPassword, string modifier = "")
+    public string ValidatePassword(string password, string repeatPassword, string modifier = "", bool changeDefaultPassword = false)
     {
+        if (changeDefaultPassword)
+        {
+            if (password == "password" && repeatPassword == "password") return string.Empty;
+
+            return "Use 'password' as the old password.";
+        }
+
         var errorMsg = new StringBuilder();
 
         if (password.Length < 8)
@@ -43,14 +50,14 @@ public class RegisterValidation(IRepo repo)
         return errorMsg.ToString();
     }
 
-    public string ValidateEmail(string email)
+    public string ValidateEmail(string email, bool existingUser = false)
     {
         var errorMsg = new StringBuilder();
 
         if (!email.Contains("@tracecollege.edu.ph"))
             errorMsg.Append("\u2717 Invalid email address. Please use your TRACE College email address.\n");
 
-        if (repo.GetUserByEmail(email.ToLower(CultureInfo.InvariantCulture)) is not null)
+        if (repo.GetUserByEmail(email.ToLower(CultureInfo.InvariantCulture)) is not null && !existingUser)
             errorMsg.Append("\u2717 Email already exists.\n");
 
         return errorMsg.ToString();

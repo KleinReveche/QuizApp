@@ -26,17 +26,17 @@ public static class QuizFilesManager
      * Use '*' to indicate correct answer.
      * 
      * Quiz Title
-     * --
+     * -----
      * Question 1
      * > Answer 1
      * >* Answer 2
      * > Answer 3
-     * --
+     * -----
      * Question 2
      * > Answer 1
      * > Answer 2
      * >* Answer 3
-     * --
+     * -----
      * Question 3
      * >* Answer 1
      * > Answer 2
@@ -47,26 +47,23 @@ public static class QuizFilesManager
     public static Quiz? LoadQuizTxt(Stream stream, IRepo repo)
     {
         var quizText = new StreamReader(stream).ReadToEnd();
-        return QuizHandlers.TextToQuiz(quizText, repo);
+        return QuizHandlers.TextToQuiz(quizText);
     }
 
-    public static void SaveQuizQuiz(Quiz quiz, string location, bool clean)
+    public static void SaveQuizQuiz(Quiz quiz, string location)
     {
-        if (clean) quiz.TakerScores.Clear();
         var json = JsonSerializer.Serialize(quiz, Context.Quiz);
         File.WriteAllText(location, JsonScrambler.Encode(json));
     }
 
-    public static void SaveQuizJson(Quiz quiz, string location, bool clean)
+    public static void SaveQuizJson(Quiz quiz, string location)
     {
-        if (clean) quiz.TakerScores.Clear();
         var json = JsonSerializer.Serialize(quiz, Context.Quiz);
         File.WriteAllText(location, json);
     }
 
     public static void SaveQuizTxt(Quiz quiz, string location)
     {
-        quiz.TakerScores.Clear();
         File.WriteAllText(location, QuizHandlers.QuizToString(quiz));
     }
 }

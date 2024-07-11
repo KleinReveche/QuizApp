@@ -39,6 +39,12 @@ public class SqlRepo : IRepo
         _db.SaveChanges();
     }
 
+    public void AddUsers(IEnumerable<User> users)
+    {
+        _db.Users.AddRange(users);
+        _db.SaveChanges();
+    }
+
     public User GetUser(int id)
     {
         return _db.Users.First(x => x.Id == id);
@@ -80,7 +86,7 @@ public class SqlRepo : IRepo
 
     public Quiz GetQuiz(int id)
     {
-        return _db.Quizzes.First(x => x.Id == id);
+        return _db.Quizzes.Include(q => q.Questions).First(x => x.Id == id);
     }
 
     public List<Quiz> GetQuizzes()
@@ -88,41 +94,38 @@ public class SqlRepo : IRepo
         return _db.Quizzes.Include(q => q.Questions).ToList();
     }
 
-    public int GetNewUserId()
+    public void AddTakerScore(TakerScore takerScore)
     {
-        try
-        {
-            return GetUsers().OrderBy(x => x.Id).Last().Id + 1;
-        }
-        catch
-        {
-            return 0;
-        }
+        _db.TakerScores.Add(takerScore);
+        _db.SaveChanges();
     }
 
-    public int GetNewQuizId()
+    public void RemoveTakerScore(TakerScore takerScore)
     {
-        try
-        {
-            return GetQuizzes().OrderBy(x => x.Id).Last().Id + 1;
-        }
-        catch
-        {
-            return 0;
-        }
+        _db.TakerScores.Remove(takerScore);
+        _db.SaveChanges();
     }
 
-    public int GetNewQuestionId()
+    public void UpdateTakerScore(TakerScore original, TakerScore updated)
     {
-        try
-        {
-            return GetQuizzes().SelectMany(x => x.Questions).OrderBy(x => x.Id).Last().Id + 1;
-        }
-        catch
-        {
-            return 0;
-        }
-        
+        _db.Remove(original);
+        _db.Add(updated);
+        _db.SaveChanges();
+    }
+
+    public TakerScore GetTakerScore(int id)
+    {
+        return _db.TakerScores.First(x => x.Id == id);
+    }
+
+    public List<TakerScore> GetTakerScores()
+    {
+        return _db.TakerScores.ToList();
+    }
+
+    public List<TakerScore> GetTakerScores(int userId)
+    {
+        return _db.TakerScores.Where(x => x.UserId == userId).ToList();
     }
 
     private void InitializeRepo()

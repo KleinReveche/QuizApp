@@ -1,5 +1,5 @@
-﻿using System.Runtime.InteropServices;
-using QuizApp.Core.Data.Models;
+﻿using QuizApp.Core.Data.Models;
+using QuizApp.WinFormsUI.Properties;
 
 namespace QuizApp.WinFormsUI.Forms;
 
@@ -8,31 +8,26 @@ public partial class StudentDashboardForm : Form
     private UserControl _currentPageControl;
 
     private DateTime _lastClickTime = DateTime.MinValue;
-    private User _user;
+    private readonly User _user;
+    private readonly bool _defaultPassword;
 
-    public StudentDashboardForm(User user)
+    public StudentDashboardForm(User user, bool defaultPassword)
     {
         _user = user;
+        _defaultPassword = defaultPassword;
         InitializeComponent();
-        _currentPageControl = home;
+        _currentPageControl = defaultPassword ? settings : quizzes;
+
+        if (!defaultPassword) return;
+        quizzes.Visible = false;
+        SidePanelIndicator.Top = btnSettings.Top;
+        SidePanelIndicator.Height = btnSettings.Height;
+        _currentPageControl.Visible = false;
+        _currentPageControl = settings;
+        _currentPageControl.Visible = true;
+        btnQuizzes.Enabled = false;
+        MessageBox.Show(Resources.change_password, Resources.error, MessageBoxButtons.OK);
     }
-
-    [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-    private static extern IntPtr CreateRoundRectRgn
-    (
-        int nLeftRect, // x-coordinate of upper-left corner
-        int nTopRect, // y-coordinate of upper-left corner
-        int nRightRect, // x-coordinate of lower-right corner
-        int nBottomRect, // y-coordinate of lower-right corner
-        int nWidthEllipse, // height of ellipse
-        int nHeightEllipse // width of ellipse
-    );
-
-    [DllImport("user32.dll")]
-    private static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-
-    [DllImport("user32.dll")]
-    private static extern bool ReleaseCapture();
 
     private void ActionBar_MouseDown(object sender, MouseEventArgs e)
     {
@@ -44,8 +39,8 @@ public partial class StudentDashboardForm : Form
         }
         else
         {
-            ReleaseCapture();
-            SendMessage(Handle, 0x112, 0xf012, 0);
+            WinApi.ReleaseCapture();
+            WinApi.SendMessage(Handle, 0x112, 0xf012, 0);
         }
 
         _lastClickTime = DateTime.Now;
@@ -62,12 +57,6 @@ public partial class StudentDashboardForm : Form
 
         switch (button.Name)
         {
-            case "btnHome":
-                if (_currentPageControl == home) return;
-                HideCurrentPage(button);
-                _currentPageControl = home;
-                _currentPageControl.Visible = true;
-                break;
             case "btnQuizzes":
                 if (_currentPageControl == quizzes) return;
                 HideCurrentPage(button);
@@ -96,9 +85,18 @@ public partial class StudentDashboardForm : Form
 
         Region = WindowState switch
         {
-            FormWindowState.Normal => Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20)),
-            FormWindowState.Maximized => Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 0, 0)),
-            _ => Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20))
+            FormWindowState.Normal => Region.FromHrgn(WinApi.CreateRoundRectRgn(0, 0, Width, Height, 20, 20)),
+            FormWindowState.Maximized => Region.FromHrgn(WinApi.CreateRoundRectRgn(0, 0, Width, Height, 0, 0)),
+            _ => Region.FromHrgn(WinApi.CreateRoundRectRgn(0, 0, Width, Height, 20, 20))
         };
+
+        if (settings.DefaultPassword) return;
+        btnQuizzes.Enabled = true;
+    }
+
+    private void StudentDashboardForm_Paint(object sender, PaintEventArgs e)
+    {
+        if (settings.DefaultPassword) return;
+        btnQuizzes.Enabled = true;
     }
 }

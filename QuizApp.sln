@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizApp.WinFormsUI", "QuizApp.WinFormsUI\QuizApp.WinFormsUI.csproj", "{0D4A066B-404B-4647-BCF0-AF79EBF7E728}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizApp.Core", "QuizApp.Core\QuizApp.Core.csproj", "{2F857B70-1ED6-4163-80F7-3B319E8F5038}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizApp.Core", "QuizApp.Core\QuizApp.Core.csproj", "{2F857B70-1ED6-4163-80F7-3B319E8F5038}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -547,8 +547,8 @@ namespace QuizApp.WinFormsUI.Forms
             panelRight.BackColor = Color.FromArgb(26, 17, 17);
             panelRight.Controls.Add(ActionBar);
             panelRight.Controls.Add(lblClose);
-            panelRight.Controls.Add(panelRegister);
             panelRight.Controls.Add(panelLogin);
+            panelRight.Controls.Add(panelRegister);
             panelRight.Location = new Point(346, 0);
             panelRight.Margin = new Padding(4, 3, 4, 3);
             panelRight.Name = "panelRight";

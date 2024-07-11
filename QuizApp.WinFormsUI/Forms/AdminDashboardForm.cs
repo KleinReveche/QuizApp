@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using QuizApp.Core.Data.Models;
+﻿using QuizApp.Core.Data.Models;
 
 namespace QuizApp.WinFormsUI.Forms;
 
@@ -17,23 +16,6 @@ public partial class AdminDashboardForm : Form
         _currentPageControl = home;
     }
 
-    [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-    private static extern IntPtr CreateRoundRectRgn
-    (
-        int nLeftRect, // x-coordinate of upper-left corner
-        int nTopRect, // y-coordinate of upper-left corner
-        int nRightRect, // x-coordinate of lower-right corner
-        int nBottomRect, // y-coordinate of lower-right corner
-        int nWidthEllipse, // height of ellipse
-        int nHeightEllipse // width of ellipse
-    );
-
-    [DllImport("user32.dll")]
-    private static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-
-    [DllImport("user32.dll")]
-    private static extern bool ReleaseCapture();
-
     private void ActionBar_MouseDown(object sender, MouseEventArgs e)
     {
         var clickDelta = DateTime.Now - _lastClickTime;
@@ -44,8 +26,8 @@ public partial class AdminDashboardForm : Form
         }
         else
         {
-            ReleaseCapture();
-            SendMessage(Handle, 0x112, 0xf012, 0);
+            WinApi.ReleaseCapture();
+            WinApi.SendMessage(Handle, 0x112, 0xf012, 0);
         }
 
         _lastClickTime = DateTime.Now;
@@ -99,9 +81,9 @@ public partial class AdminDashboardForm : Form
 
         Region = WindowState switch
         {
-            FormWindowState.Normal => Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20)),
-            FormWindowState.Maximized => Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 0, 0)),
-            _ => Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20))
+            FormWindowState.Normal => Region.FromHrgn(WinApi.CreateRoundRectRgn(0, 0, Width, Height, 20, 20)),
+            FormWindowState.Maximized => Region.FromHrgn(WinApi.CreateRoundRectRgn(0, 0, Width, Height, 0, 0)),
+            _ => Region.FromHrgn(WinApi.CreateRoundRectRgn(0, 0, Width, Height, 20, 20))
         };
     }
 }

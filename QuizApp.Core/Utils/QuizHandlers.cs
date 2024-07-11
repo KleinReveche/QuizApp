@@ -1,6 +1,5 @@
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using QuizApp.Core.Data.Models;
 using QuizApp.Core.Data.Repo;
 
@@ -8,11 +7,15 @@ namespace QuizApp.Core.Utils;
 
 public static class QuizHandlers
 {
+    public const string NewLineIndicator = "<br>";
+    public const string QuizSeparator = "-----";
+    
     public static string QuizToString(Quiz quiz)
     {
         var sb = new StringBuilder();
         sb.AppendLine(quiz.Title);
-        sb.AppendLine("--");
+        sb.AppendLine(quiz.TimerInSeconds.ToString());
+        sb.AppendLine(QuizSeparator);
         foreach (var question in quiz.Questions)
         {
             sb.AppendLine(question.QuestionText);
@@ -22,24 +25,45 @@ public static class QuizHandlers
                 sb.Append(' ');
                 sb.AppendLine(question.Answers[i]);
             }
-            sb.AppendLine("--");
+            sb.AppendLine(QuizSeparator);
         }
         return sb.ToString();
     }
     
     public static bool ValidateQuiz(string quiz, out string errorMessage)
     {
-        var blocks = quiz.Split("--", StringSplitOptions.TrimEntries);
+        var blocks = quiz.Split(QuizSeparator, StringSplitOptions.TrimEntries);
         if (blocks.Length < 2) 
         {
             errorMessage = "Quiz must have at least one question.";
             return false;
         }
 
-        var title = blocks[0].Trim();
+        var titleBlock = blocks[0].Split(Environment.NewLine);
+
+        if (titleBlock.Length < 2) {
+            errorMessage = "Quiz must have a title and a timer.";
+            return false;
+        }
+
+        var title = titleBlock[0];
+        var timer = titleBlock[1];
+
         if (string.IsNullOrEmpty(title)) 
         {
             errorMessage = "Quiz must have a title.";
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(timer))
+        {
+            errorMessage = "Quiz must have a timer.";
+            return false;
+        }
+
+        if (!int.TryParse(timer, out _))
+        {
+            errorMessage = "Timer must be a number in seconds.";
             return false;
         }
 
@@ -89,12 +113,13 @@ public static class QuizHandlers
         return true;
     }
 
-    public static Quiz? TextToQuiz(string quizText, IRepo repo)
+    public static Quiz? TextToQuiz(string quizText)
     {
-        var text = quizText.Trim().Split("--", StringSplitOptions.TrimEntries);
-        var quizTitle = text[0].Trim();
+        var text = quizText.Trim().Split(QuizSeparator, StringSplitOptions.TrimEntries);
+        var titleBlock = text[0].Split(Environment.NewLine);
+        var quizTitle = titleBlock[0].Trim();
+        var timer = titleBlock[1].Trim();
         var questions = new List<Question>();
-        var initialQuestionId = repo.GetNewQuestionId();
         
         foreach (var question in text.Skip(1))
         {
@@ -116,20 +141,19 @@ public static class QuizHandlers
             
             var q = new Question
             {
-                Id = initialQuestionId,
                 QuestionText = questionText,
                 Answers = answers,
                 CorrectAnswerIndex = correctAnswerIndex
             };
             questions.Add(q);
-            initialQuestionId++;
         }
 
         return new Quiz
         {
-            Id = repo.GetNewQuizId(),
             Title = quizTitle,
-            Questions = questions
+            Questions = questions,
+            QuizDone = false,
+            TimerInSeconds = int.Parse(timer)
         };
     }
 
@@ -140,26 +164,14 @@ public static class QuizHandlers
             var oldQuiz = JsonSerializer.Deserialize(scrambled ? JsonScrambler.Decode(json) : json, context.Quiz);
             if (oldQuiz == null) return null;
 
-            var questions = new List<Question>();
-            var initialQuestionId = repo.GetNewQuestionId();
-            foreach (var oldQuestion in oldQuiz.Questions)
-            {
-                questions.Add(new Question
-                {
-                    Id = initialQuestionId,
-                    QuestionText = oldQuestion.QuestionText,
-                    Answers = oldQuestion.Answers,
-                    CorrectAnswerIndex = oldQuestion.CorrectAnswerIndex
-                });
-                initialQuestionId++;
-            }
+            var questions = oldQuiz.Questions.Select(oldQuestion => new Question { QuestionText = oldQuestion.QuestionText, Answers = oldQuestion.Answers, CorrectAnswerIndex = oldQuestion.CorrectAnswerIndex }).ToList();
 
             return new Quiz
             {
-                Id = repo.GetNewQuizId(),
                 Title = oldQuiz.Title,
                 Questions = questions,
-                TakerScores = oldQuiz.TakerScores
+                QuizDone = oldQuiz.QuizDone,
+                TimerInSeconds = oldQuiz.TimerInSeconds
             };
         }
         catch

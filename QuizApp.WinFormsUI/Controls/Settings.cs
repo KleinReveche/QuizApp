@@ -8,18 +8,20 @@ namespace QuizApp.WinFormsUI.Controls;
 public partial class Settings : UserControl
 {
     private readonly User _user;
+    public bool DefaultPassword { get; set; }
 
-    public Settings()
+    public Settings(User user, bool defaultPassword = false)
     {
-        //_user = user;
+        _user = user;
         InitializeComponent();
+        DefaultPassword = defaultPassword;
     }
 
     private void btnAction_Click(object sender, EventArgs e)
     {
         var validation = new RegisterValidation(QuizApp.Repo);
 
-        var validatedOld = validation.ValidatePassword(boxOldPassword.Text, boxOldPassword.Text, "Old ");
+        var validatedOld = validation.ValidatePassword(boxOldPassword.Text, boxOldPassword.Text, "Old ", DefaultPassword);
         if (validatedOld.Length > 0)
         {
             MessageBox.Show(validatedOld, Resources.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -47,5 +49,7 @@ public partial class Settings : UserControl
 
         QuizApp.Repo.UpdateUser(_user, updatedUser);
         MessageBox.Show(Resources.password_updated_success, Resources.info, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        DefaultPassword = false;
     }
 }

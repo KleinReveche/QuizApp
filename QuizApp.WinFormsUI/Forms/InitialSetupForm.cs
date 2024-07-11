@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Text;
 using QuizApp.Core.Data;
 using QuizApp.Core.Data.Models;
 using QuizApp.Core.Data.Validation;
@@ -12,30 +11,13 @@ public partial class InitialSetupForm : Form
     public InitialSetupForm()
     {
         InitializeComponent();
-        Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));
+        Region = Region.FromHrgn(WinApi.CreateRoundRectRgn(0, 0, Width, Height, 20, 20));
     }
-
-    [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-    private static extern IntPtr CreateRoundRectRgn
-    (
-        int nLeftRect, // x-coordinate of upper-left corner
-        int nTopRect, // y-coordinate of upper-left corner
-        int nRightRect, // x-coordinate of lower-right corner
-        int nBottomRect, // y-coordinate of lower-right corner
-        int nWidthEllipse, // height of ellipse
-        int nHeightEllipse // width of ellipse
-    );
-
-    [DllImport("user32.dll")]
-    private static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-
-    [DllImport("user32.dll")]
-    private static extern bool ReleaseCapture();
 
     private void ActionBar_MouseDown(object sender, MouseEventArgs e)
     {
-        ReleaseCapture();
-        SendMessage(Handle, 0x112, 0xf012, 0);
+        WinApi.ReleaseCapture();
+        WinApi.SendMessage(Handle, 0x112, 0xf012, 0);
     }
 
     private void lblClose_Click(object sender, EventArgs e) => Application.Exit();

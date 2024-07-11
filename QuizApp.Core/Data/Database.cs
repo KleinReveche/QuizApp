@@ -10,11 +10,13 @@ public abstract class DatabaseContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Quiz> Quizzes { get; set; }
+    public DbSet<TakerScore> TakerScores { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().HasKey(x => x.Id);
         modelBuilder.Entity<Quiz>().HasKey(x => x.Id);
+        modelBuilder.Entity<TakerScore>().HasKey(x => x.Id);
     }
 }
 
@@ -25,6 +27,9 @@ public class SqliteDbContext : DatabaseContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite($"Data Source={DbName}");
+#if DEBUG
+        optionsBuilder.EnableSensitiveDataLogging().EnableDetailedErrors();
+#endif
     }
 }
 
